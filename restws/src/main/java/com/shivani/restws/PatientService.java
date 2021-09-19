@@ -1,6 +1,8 @@
 package com.shivani.restws;
 
 import java.util.List;
+
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -29,5 +31,9 @@ public interface PatientService {
 	@Path("/patients")
 	@PUT
 	Response updatePatient(Patient patient);
+	
+	@Path("/patients/{id}")
+	@DELETE
+	Response deletePatient(@PathParam(value = "id")Long id);
 
 }

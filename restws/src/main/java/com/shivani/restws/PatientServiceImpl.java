@@ -50,11 +50,24 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public Response updatePatient(Patient patient) {
-		Patient currPatient  = patients.get(patient.getId());
+		Patient currPatient = patients.get(patient.getId());
 		Response response;
-		if(currPatient!=null) {
-			 patients.put(patient.getId(), currPatient);
-			 response = Response.ok(patient.getId()).build();
+		if (currPatient != null) {
+			patients.put(patient.getId(), currPatient);
+			response = Response.ok(patient.getId()).build();
+		} else {
+			response = Response.notModified().build();
+		}
+		return response;
+	}
+
+	@Override
+	public Response deletePatient(Long id) {
+		boolean patientExists = patients.get(id) != null;
+		Response response;
+		if(patientExists) {
+			patients.remove(id);
+			response = Response.ok().build();
 		}else {
 			response = Response.notModified().build();
 		}
