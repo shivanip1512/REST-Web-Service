@@ -66,4 +66,17 @@ public class CourseServiceImpl implements CourseService {
 		return Response.ok(course).build();
 	}
 
+	@Override
+	public Response deleteCourse(Integer id) {
+		boolean courseExists = courses.get(id) != null;
+		Response response;
+		if(courseExists) {
+			courses.remove(id);
+			response = Response.ok().build();
+		}else {
+			response = Response.notModified().build();
+		}
+		return response;
+	}
+
 }
