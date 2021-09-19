@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.stereotype.Service;
 
 import com.shivani.restws.model.Patient;
@@ -37,5 +39,12 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public Patient getPatient(Long id) {
 		return patients.get(id);
+	}
+
+	@Override
+	public Response createPatient(Patient patient) {
+		patient.setId(++currentId);
+		patients.put(patient.getId(), patient);
+		return Response.ok(patient).build();
 	}
 }
