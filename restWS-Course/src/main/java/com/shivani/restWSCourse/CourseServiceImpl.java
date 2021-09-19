@@ -37,9 +37,9 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Response updateCourse(Course course) {
-		boolean courseExist = courses.get(course.getId())!=null;
+		boolean courseExist = courses.get(course.getId()) != null;
 		Response response;
-		if(courseExist) {
+		if (courseExist) {
 			Course updateCourse = new Course();
 			updateCourse.setId(course.getId());
 			updateCourse.setName(course.getName());
@@ -48,10 +48,22 @@ public class CourseServiceImpl implements CourseService {
 			updateCourse.setTaughtBy(course.getTaughtBy());
 			courses.put(course.getId(), updateCourse);
 			response = Response.ok().build();
-		}else {
+		} else {
 			response = Response.notModified().build();
 		}
 		return response;
+	}
+
+	@Override
+	public Response createCourse(Course course) {
+		Course newCourse = new Course();
+		newCourse.setId(++CourseId);
+		newCourse.setName(course.getName());
+		newCourse.setPrice(course.getPrice());
+		newCourse.setRating(course.getRating());
+		newCourse.setTaughtBy(course.getTaughtBy());
+		courses.put(CourseId, newCourse);
+		return Response.ok(course).build();
 	}
 
 }
