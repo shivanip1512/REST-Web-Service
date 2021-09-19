@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.stereotype.Service;
 
 import com.shivani.restWSCourse.Model.Course;
@@ -31,6 +33,25 @@ public class CourseServiceImpl implements CourseService {
 		Collection<Course> res = courses.values();
 		ArrayList<Course> courseList = new ArrayList<>(res);
 		return courseList;
+	}
+
+	@Override
+	public Response updateCourse(Course course) {
+		boolean courseExist = courses.get(course.getId())!=null;
+		Response response;
+		if(courseExist) {
+			Course updateCourse = new Course();
+			updateCourse.setId(course.getId());
+			updateCourse.setName(course.getName());
+			updateCourse.setPrice(course.getPrice());
+			updateCourse.setRating(course.getRating());
+			updateCourse.setTaughtBy(course.getTaughtBy());
+			courses.put(course.getId(), updateCourse);
+			response = Response.ok().build();
+		}else {
+			response = Response.notModified().build();
+		}
+		return response;
 	}
 
 }
